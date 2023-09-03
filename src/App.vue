@@ -1,7 +1,6 @@
 <template>
   <div id="container">
     <img id="logo" alt="Vue logo" src="./assets/logo.png">
-    <div style="display: block"></div>
     <div class="filebox">
       <label for="file">사진 업로드</label>
       <input id="file" type="file" ref="image" @change="upload">
@@ -27,7 +26,19 @@ export default {
       this.image = this.$refs.image.files[0]
       this.imgSrc = URL.createObjectURL(this.image)
       this.imageUploaded = true
-    }
+
+      const baseUrl = 'localhost:8080'
+      fetch(`${baseUrl}/image`, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.image)
+      })
+      .then(response => response.json())
+      .then(data => (this.postId = data.id))
+    },
   }
 }
 </script>
