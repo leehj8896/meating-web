@@ -1,5 +1,6 @@
 <template>
   <input type="file" ref="image" @change="upload">
+  <button v-on:click="submit"></button>
   <img id="uploaded-image" alt="Vue logo" v-bind:src="imageUploaded" v-if="imageUploaded">
 </template>
 
@@ -18,6 +19,19 @@ export default {
     upload() {
       this.image = this.$refs.image.files[0]
       this.imageUploaded = URL.createObjectURL(this.image)
+    },
+    submit() {
+      const baseUrl = 'localhost:8080'
+      fetch(`${baseUrl}/image`, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.image)
+      })
+      .then(response => response.json())
+      .then(data => (this.postId = data.id))
     }
   }
 }
