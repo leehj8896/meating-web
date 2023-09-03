@@ -1,15 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <input type="file" ref="image" @change="upload">
+  <img id="uploaded-image" alt="Vue logo" v-bind:src="imageUploaded" v-if="imageUploaded">
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  },
+  data() {
+    return {
+      imageUploaded: null,
+    }
+  },
+  methods: {
+    upload() {
+      this.image = this.$refs.image.files[0]
+      this.imageUploaded = URL.createObjectURL(this.image)
+    }
   }
 }
 </script>
@@ -22,5 +31,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#uploaded-image {
+  width: 200px;
+  height: 200px;
 }
 </style>
