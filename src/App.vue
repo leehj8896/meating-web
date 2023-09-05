@@ -1,26 +1,62 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="container">
+    <img id="logo" alt="Vue logo" src="./assets/logo.png">
+    <div style="display: block"></div>
+    <button id="upload-button" >사진 업로드</button>
+    <img id="beef-image" alt="소고기 이미지" v-bind:src="imgSrc" v-if="!imageUploaded">
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  },
+  data() {
+    return {
+      imageUploaded: false,
+      imgSrc: require('./assets/question-mark2.png')
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html {
+  height: 100%; 
+  width: 100%;
+  overflow: hidden;
+}
+#container {
+  width: 100%;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 0; 
+  padding: 0;
+}
+#logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#upload-button {
+  all: unset;
+  display: block;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+
+  width: 280px;
+  height: 80px;
+  
+  color: white;
+  background-color: #f33;
+}
+#beef-image {
+  width: 280px;
+
+  margin-top: 20px;
+
+  background-color: grey;
 }
 </style>
