@@ -5,7 +5,7 @@
       <label for="file">사진 업로드</label>
       <input id="file" type="file" ref="image" @change="upload">
     </div>
-    <img id="beef-image" alt="소고기 이미지" v-bind:src="imgSrc" v-if="!imageUploaded">
+    <img id="beef-image" alt="소고기 이미지" v-bind:src="imgSrc">
   </div>
 </template>
 
@@ -17,7 +17,6 @@ export default {
   },
   data() {
     return {
-      imageUploaded: false,
       imgSrc: require('./assets/question-mark2.png')
     }
   },
@@ -25,19 +24,25 @@ export default {
     upload() {
       this.image = this.$refs.image.files[0]
       this.imgSrc = URL.createObjectURL(this.image)
-      this.imageUploaded = true
 
-      const baseUrl = 'localhost:8080'
-      fetch(`${baseUrl}/image`, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.image)
-      })
-      .then(response => response.json())
-      .then(data => (this.postId = data.id))
+      const baseUrl = 'http://127.0.0.1:8000'
+      try {
+        const formData = new FormData()
+        formData.append('file', this.image)
+        formData.append('key1', 'value1')
+
+        fetch(`${baseUrl}/grade`, {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(JSON.stringify(data))
+        })  
+      } catch (error) {
+        console.log(JSON.stringify(error))
+      }
+      
     },
   }
 }
