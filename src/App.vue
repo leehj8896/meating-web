@@ -42,7 +42,6 @@ export default {
       } catch (error) {
         console.log(JSON.stringify(error))
       }
-      
     },
   }
 }
@@ -94,6 +93,10 @@ html {
   margin-top: 20px;
 
   background-color: grey;
+}
+#uploaded-image {
+  width: 200px;
+  height: 200px;
 }
 #uploaded-image {
   width: 200px;
