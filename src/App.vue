@@ -63,13 +63,12 @@ html {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 220px;
-  height: 280px;
+  width: 210px;
+  height: 230px;
 }
 .filebox {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10px;
 
   width: 280px;
   height: 80px;
