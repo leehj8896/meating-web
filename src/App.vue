@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <img id="logo" alt="Vue logo" src="./assets/logo.png">
+    <img id="logo" alt="logo" src="./assets/logo-meating.png">
     <div class="filebox">
       <label for="file">사진 업로드</label>
       <input id="file" type="file" ref="image" @change="upload">
@@ -63,11 +63,13 @@ html {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  width: 220px;
+  height: 280px;
 }
 .filebox {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+  margin-top: 10px;
 
   width: 280px;
   height: 80px;
