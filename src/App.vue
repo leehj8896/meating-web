@@ -5,7 +5,11 @@
       <label for="file">사진 업로드</label>
       <input id="file" type="file" ref="image" @change="upload">
     </div>
-    <img id="beef-image" alt="소고기 이미지" v-bind:src="imgSrc">
+    <div class="imagebox">
+      <img id="beef-image" alt="소고기 이미지" v-bind:src="imgSrc">
+      <div id="score" v-if="score === 0"> ? 점</div>
+      <div id="score" v-else>{{ score }}점</div>
+    </div>
   </div>
 </template>
 
@@ -17,20 +21,20 @@ export default {
   },
   data() {
     return {
-      imgSrc: require('./assets/question-mark2.png')
+      imgSrc: require('./assets/question-mark2.png'),
+      score: 0,
     }
   },
   methods: {
     upload() {
       this.image = this.$refs.image.files[0]
+      if (!this.image) return
       this.imgSrc = URL.createObjectURL(this.image)
 
-      const baseUrl = 'http://127.0.0.1:8000'
+      const baseUrl = 'http://127.0.0.1:8001'
       try {
         const formData = new FormData()
         formData.append('file', this.image)
-        formData.append('key1', 'value1')
-
         fetch(`${baseUrl}/grade`, {
           method: 'POST',
           body: formData
@@ -38,6 +42,7 @@ export default {
         .then(response => response.json())
         .then(data => {
           console.log(JSON.stringify(data))
+          this.score = data
         })  
       } catch (error) {
         console.log(JSON.stringify(error))
@@ -52,6 +57,7 @@ html {
   height: 100%; 
   width: 100%;
   overflow: hidden;
+  background-color: ivory;
 }
 #container {
   width: 100%;
@@ -63,18 +69,20 @@ html {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 210px;
-  height: 230px;
+  width: 50vw;
+  height: 60vw;
 }
 .filebox {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 1vw;
 
-  width: 280px;
-  height: 80px;
+  width: 75vw;
+  height: 21vw;
   
   color: white;
   background-color: #f33;
+  border-radius: 5px;
 }
 .filebox label {
   display: block;
@@ -88,19 +96,20 @@ html {
 .filebox input[type="file"] {
   display: none;
 }
-#beef-image {
-  width: 280px;
-
+.imagebox {
+  width: 75vw;
+  height: 75vw;
   margin-top: 20px;
-
   background-color: grey;
+  margin-left: auto;
+  margin-right: auto;
 }
-#uploaded-image {
-  width: 200px;
-  height: 200px;
+#beef-image {
+  width: 100%;
+  height: 100%;
 }
-#uploaded-image {
-  width: 200px;
-  height: 200px;
+#score {
+  margin-top: 1vw;
+  font-size: larger;
 }
 </style>
