@@ -1,4 +1,5 @@
 <template>
+  <div style="font-size: 0.9rem; position: absolute; left: 1rem;">version {{ version }}</div>
   <div id="container">
     <img id="logo" alt="logo" src="./assets/logo-meating.png">
     <div class="filebox">
@@ -23,6 +24,7 @@ export default {
     return {
       imgSrc: require('./assets/question-mark2.png'),
       score: 0,
+      version: '1.0',
     }
   },
   methods: {
