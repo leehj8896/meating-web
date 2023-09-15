@@ -24,7 +24,7 @@ export default {
     return {
       imgSrc: require('./assets/question-mark2.png'),
       score: 0,
-      version: '1.0',
+      version: '1.0.1',
     }
   },
   methods: {
