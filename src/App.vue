@@ -8,8 +8,7 @@
     </div>
     <div class="imagebox">
       <img id="beef-image" alt="소고기 이미지" v-bind:src="imgSrc">
-      <div id="score" v-if="score === 0"> ? 점</div>
-      <div id="score" v-else>{{ score }}점</div>
+      <div id="score">{{ scoreMessage }}</div>
     </div>
   </div>
 </template>
@@ -23,7 +22,7 @@ export default {
   data() {
     return {
       imgSrc: require('./assets/question-mark2.png'),
-      score: 0,
+      scoreMessage: '? 점',
       version: '1.0.1',
     }
   },
@@ -37,14 +36,18 @@ export default {
         const formData = new FormData()
         formData.append('file', this.image)
         console.log(`base url: ${process.env.VUE_APP_BASE_URL}`)
+        this.scoreMessage = '계산중...'
         fetch(`${process.env.VUE_APP_BASE_URL}/grade`, {
           method: 'POST',
           body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+          if (response.status === 200) return response.json()
+          this.scoreMessage = '계산불가!'
+        })
         .then(data => {
           console.log(JSON.stringify(data))
-          this.score = data
+          this.score = `${data}`
         })  
       } catch (error) {
         console.log(JSON.stringify(error))
