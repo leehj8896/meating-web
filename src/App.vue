@@ -33,11 +33,11 @@ export default {
       if (!this.image) return
       this.imgSrc = URL.createObjectURL(this.image)
 
-      const baseUrl = 'http://127.0.0.1:8001'
       try {
         const formData = new FormData()
         formData.append('file', this.image)
-        fetch(`${baseUrl}/grade`, {
+        console.log(`base url: ${process.env.VUE_APP_BASE_URL}`)
+        fetch(`${process.env.VUE_APP_BASE_URL}/grade`, {
           method: 'POST',
           body: formData
         })
