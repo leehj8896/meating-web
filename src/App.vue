@@ -35,19 +35,19 @@ export default {
       try {
         const formData = new FormData()
         formData.append('file', this.image)
-        console.log(`base url: ${process.env.VUE_APP_BASE_URL}`)
+        // console.log(`base url: ${process.env.VUE_APP_BASE_URL}`)
         this.scoreMessage = '계산중...'
         fetch(`${process.env.VUE_APP_BASE_URL}/grade`, {
           method: 'POST',
           body: formData
         })
         .then(response => {
-          if (response.status === 200) return response.json()
+          if (200 <= response.status && response.status < 300) return response.json()
           this.scoreMessage = '계산불가!'
         })
         .then(data => {
           console.log(JSON.stringify(data))
-          this.score = `${data}`
+          this.scoreMessage = `${data}점`
         })  
       } catch (error) {
         console.log(JSON.stringify(error))
