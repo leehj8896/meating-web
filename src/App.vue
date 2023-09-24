@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    upload() {
+    async upload() {
       this.image = this.$refs.image.files[0]
       if (!this.image) return
       this.imgSrc = URL.createObjectURL(this.image)
@@ -35,22 +35,20 @@ export default {
       try {
         const formData = new FormData()
         formData.append('file', this.image)
-        // console.log(`base url: ${process.env.VUE_APP_BASE_URL}`)
         this.scoreMessage = '계산중...'
-        fetch(`${process.env.VUE_APP_BASE_URL}/grade`, {
+        const response = await fetch(`${process.env.VUE_APP_BASE_URL}/grade`, {
           method: 'POST',
           body: formData
         })
-        .then(response => {
-          if (200 <= response.status && response.status < 300) return response.json()
+        if (response.status < 200 || 300 <= response.status) {
           this.scoreMessage = '계산불가!'
-        })
-        .then(data => {
-          console.log(JSON.stringify(data))
-          this.scoreMessage = `${data}점`
-        })  
+          return
+        }
+        const data = await response.json()
+        console.log(`data: ${data}`)
+        this.scoreMessage = `${data}`
       } catch (error) {
-        console.log(JSON.stringify(error))
+        console.log(`error: ${JSON.stringify(error)}`)
       }
     },
   }
