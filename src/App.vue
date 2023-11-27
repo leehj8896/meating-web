@@ -29,7 +29,7 @@ export default {
     return {
       imgSrc: require('./assets/question-mark2.png'),
       scoreMessage: '? 점',
-      version: '1.0.4',
+      version: '1.0.5',
     }
   },
   methods: {
