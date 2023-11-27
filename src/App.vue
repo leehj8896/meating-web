@@ -4,7 +4,13 @@
     <img id="logo" alt="logo" src="./assets/logo-meating.png">
     <div class="filebox">
       <label for="file">사진 업로드</label>
-      <input id="file" type="file" ref="image" @change="upload">
+      <input 
+        id="file" 
+        type="file" 
+        ref="image" 
+        @change="upload" 
+        accept="image/jpg, image/jpeg, image/png"
+      >
     </div>
     <div class="imagebox">
       <img id="beef-image" alt="소고기 이미지" v-bind:src="imgSrc">
@@ -30,6 +36,10 @@ export default {
     async upload() {
       this.image = this.$refs.image.files[0]
       if (!this.image) return
+      if (!this.isImageFile(this.image)) {
+        alert('이미지 파일만 업로드 가능합니다.')
+        return
+      }
       this.imgSrc = URL.createObjectURL(this.image)
 
       try {
@@ -50,6 +60,15 @@ export default {
       } catch (error) {
         console.log(`error: ${JSON.stringify(error)}`)
       }
+    },
+    isImageFile(image) {
+      const filename = image.name
+      const arr = filename.split('.')
+      const filetype = arr[arr.length - 1]
+      if (['jpg', 'jpeg', 'png'].includes(filetype)) {
+        return true
+      }
+      return false
     },
   }
 }
