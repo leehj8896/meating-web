@@ -56,7 +56,7 @@ export default {
         }
         const data = await response.json()
         console.log(`data: ${data}`)
-        this.scoreMessage = `${data}`
+        this.scoreMessage = `😆 ${data} 점 😆`
       } catch (error) {
         console.log(`error: ${JSON.stringify(error)}`)
       }
